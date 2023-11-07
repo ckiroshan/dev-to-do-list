@@ -103,4 +103,41 @@ function saveLocalTodos(todo) {
   localStorage.setItem("todos", JSON.stringify(todos));
 }
 
+function getTodos(todo) {
+  // Check if Todos already exist
+  let todos;
+  if (localStorage.getItem("todos") === null) {
+    todos = [];
+  } else {
+    todos = JSON.parse(localStorage.getItem("todos"));
+  }
+
+  todos.forEach(function (todo) {
+    // Todo DIV
+    const todoDiv = document.createElement("div");
+    todoDiv.classList.add("todo");
+
+    // Todo lI
+    const newTodo = document.createElement("li");
+    newTodo.innerText = todo;
+    newTodo.classList.add("todo-item");
+    todoDiv.appendChild(newTodo); // Wraps <li> within <div>
+
+    // Checkmark button
+    const completedButton = document.createElement("button");
+    completedButton.innerHTML = '<i class="fa-solid fa-check"></i>';
+    completedButton.classList.add("complete-btn");
+    todoDiv.appendChild(completedButton);
+
+    // Delete button
+    const deleteButton = document.createElement("button");
+    deleteButton.innerHTML = '<i class="fa-solid fa-trash"></i>';
+    deleteButton.classList.add("delete-btn");
+    todoDiv.appendChild(deleteButton);
+
+    // Append to UL list
+    todoList.appendChild(todoDiv);
+  });
+}
+
 
