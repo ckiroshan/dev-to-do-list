@@ -5,6 +5,7 @@ const todoList = document.querySelector(".todo-list");
 const filterOption = document.querySelector(".filter-todo");
 
 // Event listners
+document.addEventListener("DOMContentLoaded", getTodos);
 todoButton.addEventListener("click", addTodo);
 todoList.addEventListener("click", deleteCheck);
 filterOption.addEventListener("click", filterTodo);
@@ -22,6 +23,9 @@ function addTodo(event) {
   newTodo.innerText = todoInput.value;
   newTodo.classList.add("todo-item");
   todoDiv.appendChild(newTodo); // Wraps <li> within <div>
+
+  // Add Todo to local storage
+  saveLocalTodos(todoInput.value);
 
   // Checkmark button
   const completedButton = document.createElement("button");
@@ -85,3 +89,18 @@ function filterTodo(e) {
     }
   });
 }
+
+function saveLocalTodos(todo) {
+  // Check if Todos already exist
+  let todos;
+  if (localStorage.getItem("todos") === null) {
+    todos = [];
+  } else {
+    todos = JSON.parse(localStorage.getItem("todos"));
+  }
+
+  todos.push(todo);
+  localStorage.setItem("todos", JSON.stringify(todos));
+}
+
+
